@@ -1,0 +1,417 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/dataSource/1.0.0/schema.json",
+  "artifactId": "75ee9c6f-22a4-a211-473f-72049299b816",
+  "workspaceId": "00000000-0000-0000-0000-000000000000",
+  "dataSourceInstructions": "CMS Medicare Part D Data Overview\n\nThis data is from the CMS Medicare Part D prescribers by provider and drug public database\n\nTables and Columns:\n\n1. Drug Table\n1a. table cms_provider_dim_drug is a dimension of unique drugs\n1a1. column Brnd_Name is the brand name of a drug or medication\n1a2. column Gnrc_Name is the generic name of a drug or medication\n\n2. Provider Table\n2a. table cms_provider_dim_provider is a dimension table with a list of Providers, Doctors, and Prescribers\n2a1. column Prscrbr_Last_Org_Name is the last name of Providers, Doctors, and Prescribers\n2a2. column Prscrbr_Full_Name is their full first and last name of Providers, Doctors, and Prescribers \n2a3. column Prscrbr_Type is the medical specialty of Providers, Doctors, and Prescribers\n\n3. Year Table\n3a. table cms_provider_dim_year is a dimension table of Calendar Years\n3a1. column Year is the calendar year. the column named year should be used for all questions and analysis about years or time\n\n4. Geography Table\n4a. table cms_provider_dim_geography is a dimension table of States and Cities\n4a1. column Prscrbr_State_Abrvtn should be used for queries about States or a US State. States are abbreviated with capitalized two letter abbreviations such as MN or WI\n4a2. column Prscrbr_City_State is cities in the format of Minneapolis, MN or Detroit, MI \n\n5. Drug Costs Table \n5a. table cms_provider_drug_costs_star is a fact table with information about drug prescribing and costs. Aggregate SQL functions use the fields Tot_Benes, Tot_Clms, Tot_Day_Suply, and Tot_Drug_Cst. Foreign keys on the fact table cms_provider_drug_costs_star are Drug_key, Geo_Key, Provider_Key and Year\n5a1. Tot_Benes is total beneficiaries\n5a2. Tot_Clms is total claims\n5a3. Tot_Day_Suply is total day supply\n5a4. Tot_Drug_Cst is total drug cost or total cost or cost\n5a5. Tot_Drug_Cst should be formatted as USA currency\n5a6. Use ORDER BY clauses to sort results by the metric of interest (for example, total claims, total cost, cost per day)\n\nKey Classes of Drugs:\n\n1. all Ace Inhibitor drugs contain pril within the Generic Name of table cms_provider_dim_drug\n2. all quinolone antibiotics also known as quinolones will contain floxacin within the Generic Name of table cms_provider_dim_drug\n3. Angiotensin Receptor Blocker drugs also known as ARBs will contain sartan within the Generic Name of table cms_provider_dim_drug\n4. all statins will contain statin within the Generic Name of table cms_provider_dim_drug\n5. all benzodiazepines contain zolam or zepam within the Generic Name of table cms_provider_dim_drug\n6. beta blocker drugs contain olol within the Generic Name of table cms_provider_dim_drug. The exception is carvedilol which is not a true beta blocker\n\nProvider Specialties:\n\n1. internists or Internal Medicine will contain Internal Medicine within the column Prscrbr_Type of table cms_provider_dim_provider\n",
+  "displayName": "cms_lakehouse",
+  "type": "lakehouse_tables",
+  "userDescription": null,
+  "metadata": {},
+  "elements": [
+    {
+      "id": "e66a5fbe-1036-4dbd-9c4e-3c973875a62f",
+      "is_selected": false,
+      "display_name": "dbo",
+      "type": "lakehouse_tables.schema",
+      "description": null,
+      "children": [
+        {
+          "id": "01cd9615-59f5-4da9-8fb6-c11ad0dd2b17",
+          "is_selected": true,
+          "display_name": "cms_provider_dim_drug",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "873dbf9f-0207-4810-b36b-3e9dbf2d7682",
+              "is_selected": true,
+              "display_name": "Brnd_Name",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "77912384-680a-4466-aeec-06d5e4307578",
+              "is_selected": true,
+              "display_name": "Gnrc_Name",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "b49ea2b7-2fe4-4cb2-83ae-eade3d5abb1d",
+              "is_selected": true,
+              "display_name": "Max_Year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "7f7f5bef-e57b-4cbb-9414-0b0f42055c0d",
+              "is_selected": true,
+              "display_name": "Min_Year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "1c7da4cd-9263-4f71-a6a2-863d412a6aaf",
+              "is_selected": true,
+              "display_name": "drug_key",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "a24cd069-16eb-4e7d-8d8c-a4aafe9d55d7",
+          "is_selected": true,
+          "display_name": "cms_provider_dim_year",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "ecef0268-d96b-4464-9a38-a48628928568",
+              "is_selected": true,
+              "display_name": "Year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "ea3f7695-4808-47d1-970e-34dc6354290d",
+              "is_selected": true,
+              "display_name": "Year_Date_Key",
+              "type": "lakehouse_tables.column",
+              "data_type": "date",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "61c8ebed-ded8-4fc4-b4df-a7a387c3de7f",
+          "is_selected": true,
+          "display_name": "cms_provider_dim_provider",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "7b8478fd-c0eb-4b8b-ae99-e7f6e28c7893",
+              "is_selected": true,
+              "display_name": "Prscrbr_First_Name",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "7d7d5ef3-595b-4696-ba0d-0340149811a7",
+              "is_selected": true,
+              "display_name": "Prscrbr_Full_Name",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "532fc366-3374-4cab-9343-3dbba4306424",
+              "is_selected": true,
+              "display_name": "Prscrbr_Last_Org_Name",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "61875297-8b87-42d2-8034-35cddb87f9ab",
+              "is_selected": true,
+              "display_name": "Prscrbr_NPI",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "0a8157db-9fd0-402c-826c-00930278fa6c",
+              "is_selected": true,
+              "display_name": "Prscrbr_Type",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "6d4c6800-541e-445f-8f37-a7a81b9f6469",
+              "is_selected": true,
+              "display_name": "Prscrbr_Type_Src",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "7d136f89-a1ef-4225-acc5-7a52bcfaf04d",
+              "is_selected": true,
+              "display_name": "Max_Year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "c2d0500c-861c-451c-a707-32e050071d3a",
+              "is_selected": true,
+              "display_name": "Min_Year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "253b9bdd-1d38-4e14-a2fc-8bfe358d2020",
+              "is_selected": true,
+              "display_name": "provider_key",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "4d8d7e30-1f00-4d5d-ba2f-23974752ca5c",
+          "is_selected": true,
+          "display_name": "cms_provider_dim_geography",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "bb3ce15b-bd9e-47e8-ae75-7f251d43dee8",
+              "is_selected": true,
+              "display_name": "Prscrbr_City",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "37400001-b662-44b5-9bc7-12fdf84d84f5",
+              "is_selected": true,
+              "display_name": "Prscrbr_City_State",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "eb1543b5-1ec2-41ab-a2f4-402f6c60a122",
+              "is_selected": true,
+              "display_name": "Prscrbr_State_Abrvtn",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "c5bdac65-7f35-4ab2-97f8-816c43b207bc",
+              "is_selected": true,
+              "display_name": "Prscrbr_State_FIPS",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "e267c96f-6dce-43a3-8d55-3f719c987a53",
+              "is_selected": true,
+              "display_name": "Max_Year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "bfcbbde4-af84-4b5b-9a1a-b834eef516e2",
+              "is_selected": true,
+              "display_name": "Min_Year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "468a8875-131e-4370-8c93-2a5a3006c1bf",
+              "is_selected": true,
+              "display_name": "geo_key",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "544449c4-d7d1-4f25-8b3e-7962114a4096",
+          "is_selected": true,
+          "display_name": "cms_provider_drug_costs_star",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "a753ac56-724c-4080-82fd-d2e718e28a25",
+              "is_selected": true,
+              "display_name": "GE65_Bene_Sprsn_Flag",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "17cd6dbb-7bbf-4899-97c0-f1b7b2eb254d",
+              "is_selected": true,
+              "display_name": "GE65_Sprsn_Flag",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "54410e06-be50-4cd2-8298-e40b686fe9c7",
+              "is_selected": true,
+              "display_name": "GE65_Tot_30day_Fills",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "82afce8f-82f9-4b34-8a23-b5341ef12103",
+              "is_selected": true,
+              "display_name": "GE65_Tot_Benes",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "c75b4ef3-758a-445b-b08a-e123c9c50f2a",
+              "is_selected": true,
+              "display_name": "GE65_Tot_Clms",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "c4e2c12d-2119-4bc5-a30f-46f9f087a4a2",
+              "is_selected": true,
+              "display_name": "GE65_Tot_Day_Suply",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "ab63c180-e308-4f52-aebe-e13bef9e3c61",
+              "is_selected": true,
+              "display_name": "GE65_Tot_Drug_Cst",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "94494c7d-7ea8-4dcf-9457-d96a5843a321",
+              "is_selected": true,
+              "display_name": "Tot_30day_Fills",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "00e81c50-5641-4b06-a44c-ad1515b24aea",
+              "is_selected": true,
+              "display_name": "Tot_Benes",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "da76b5f8-17ef-4a10-ae44-6094338fd4dc",
+              "is_selected": true,
+              "display_name": "Tot_Clms",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "7258d1ff-73be-4b5b-b253-933adb489999",
+              "is_selected": true,
+              "display_name": "Tot_Day_Suply",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "a3a80ee8-4101-471e-ad5e-2a24c629e1f9",
+              "is_selected": true,
+              "display_name": "Tot_Drug_Cst",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "572e9187-9657-4227-91cb-70b7c9a153fc",
+              "is_selected": true,
+              "display_name": "Year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "944b7fe6-fcdb-4c7e-aa95-ba5050f51c40",
+              "is_selected": true,
+              "display_name": "drug_key",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "e046056c-766f-4597-9d1a-4f1faf8556cc",
+              "is_selected": true,
+              "display_name": "geo_key",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "9112dfc8-0cd6-4e6c-96d9-54eef5d84a14",
+              "is_selected": true,
+              "display_name": "provider_key",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
