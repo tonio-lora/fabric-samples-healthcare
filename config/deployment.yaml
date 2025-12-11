@@ -1,3 +1,6 @@
+external_links:
+  artifactzip_github_url: "https://github.com/isinghrana/fabric-samples-healthcare/raw/refs/heads/main/analytics-bi-directlake-starschema/demoautomation/artifacts.zip"
+
 resources:
   lakehouse_name: "cms_lakehouse"
   semantic_model_name: "cms_semantic_model"
@@ -5,10 +8,41 @@ resources:
   report_name: "cms_report"
   data_agent_name: "cms_data_agent"
 
+lakehouse:
+  base_dir_relative_path: "Files/cmsdemofiles"
+
+datafactory:
+  pipeline_files:
+    datafactory_pipeline_jsonfile_relativepath: "/cms_pipeline.DataPipeline/pipeline-content.json"
+    datafactory_platform_file_relativepath: "/cms_pipeline.DataPipeline/.platform"
+  pipeline_activity_names:
+    datafactory_pipeline_downloadcmsdataset_notebookactivityname: "DownloadCMSDataset"
+    datafactory_pipeline_createcmsdataflattable_notebookactivityname: "CreateCMSDataFlatTable"
+    datafactory_pipeline_createcmsstarschematables_notebookactivityname: "CreateCMSStarSchemaTables"
+
+semantic_model:
+  semanticmodel_relative_path: "/CMS_Direct_Lake_Star_Schema.SemanticModel"
+  report_relative_path: "/CMS Medicare Part D Star Schema.Report"
+
+data_agent:
+  data_agent_instructions_path: "/agent_instructions.txt"
+  data_agent_datasource_instructions_path: "/AI_Skills_01_NotesForModel.txt"
+  data_agent_datasource_query_examples_path: "/AI_Skills_02_SQL_Examples.json"
+
+tables:
+  dim_drug_table_name: "cms_provider_dim_drug"
+  dim_geography_table_name: "cms_provider_dim_geography"
+  dim_provider_table_name: "cms_provider_dim_provider"
+  dim_year_table_name: "cms_provider_dim_year"
+  fact_costs_table_name: "cms_provider_drug_costs_star"
+
 notebooks:
   download_cmsdata_notebook_import_name: "01-DownloadCMSDataCsvFiles"
+  download_cmsdata_notebook_github_url: "https://raw.githubusercontent.com/isinghrana/fabric-samples-healthcare/refs/heads/main/analytics-bi-directlake-starschema/01-DownloadCMSDataCsvFiles.ipynb"
   create_data_table_notebook_import_name: "02-CreateCMSDataTable"
+  create_data_table_notebook_github_url: "https://raw.githubusercontent.com/isinghrana/fabric-samples-healthcare/refs/heads/main/analytics-bi-directlake-starschema/02-CreateCMSDataTable.ipynb"
   create_starschema_table_notebook_import_name: "03-CreateCMSStarSchemaTables"
+  create_starschema_table_notebook_github_url: "https://raw.githubusercontent.com/isinghrana/fabric-samples-healthcare/refs/heads/main/analytics-bi-directlake-starschema/03-CreateCMSStarSchemaTables.ipynb"
 
 steps:
   invoke_datafactory_pipeline_step: true
