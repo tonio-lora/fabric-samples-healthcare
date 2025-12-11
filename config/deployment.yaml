@@ -1,0 +1,15 @@
+resources:
+  lakehouse_name: "cms_lakehouse"
+  semantic_model_name: "cms_semantic_model"
+  datafactory_pipeline_name: "cms_pipeline"
+  report_name: "cms_report"
+  data_agent_name: "cms_data_agent"
+
+notebooks:
+  download_cmsdata_notebook_import_name: "01-DownloadCMSDataCsvFiles"
+  create_data_table_notebook_import_name: "02-CreateCMSDataTable"
+  create_starschema_table_notebook_import_name: "03-CreateCMSStarSchemaTables"
+
+steps:
+  invoke_datafactory_pipeline_step: true
+  invoke_data_agent_create_step: true
